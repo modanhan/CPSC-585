@@ -1,3 +1,4 @@
+
 #include "Graphics.h"
 #include "Resources.h"
 #include "Game.h"
@@ -61,8 +62,8 @@ int main(int argc, char *argv[])
 		
 		hud->update();
 		PhysicsManager::update(1);
-		hud->update();
-		PhysicsManager::update(1);
+		// hud->update();
+		// PhysicsManager::update(1);
 
 		//need these 4 lines for controller update now that its global
 		controller1.Update();

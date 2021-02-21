@@ -138,7 +138,7 @@ void Aventador::updateLightCamera() {
 		Viewport::position[aventadorId] = transform* vec4(-5.5f, 1.25f, 0.0f, 1);
 	}
 
-	Light::position[aventadorId] = pos + vec3(3, 5, 4);
+	Light::position[aventadorId] = pos + vec3(3, 1, 4);
 	Light::target[aventadorId] = pos;
 
 }

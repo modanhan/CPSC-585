@@ -42,10 +42,10 @@ namespace Graphics {
 
 	bool SPLIT_SCREEN = 1;
 	// 0 horizontal/side by side, 1 vertical/stacked
-	int SPLIT_SCREEN_ORIENTATION = 1;
+	int SPLIT_SCREEN_ORIENTATION = 0;
 
 	bool SHADOW = 1;
-	int SOFT_SHADOW = 1;
+	int SOFT_SHADOW = 0;
 
 	int tDrawCalls = 0;
 
@@ -891,30 +891,31 @@ namespace Graphics {
 	void loadGeometry(MyGeometry* geometry, char* path) {
 		vector<vec3> vertices, normals, bufferVertices, bufferNormals;
 		vector<vec2> uvs, bufferUVs;
-		FILE * file = fopen(path, "r");
+		FILE * file;
+		fopen_s(&file, path, "r");
 		int asdf = 0;
 		while (1) {
 			char lineHeader[128];
-			int res = fscanf(file, "%s", lineHeader);
+			int res = fscanf_s(file, "%s", lineHeader);
 			if (res == EOF)break;
 			if (strcmp(lineHeader, "v") == 0) {
 				vec3 vertex;
-				fscanf(file, "%f %f %f\n", &vertex.x, &vertex.y, &vertex.z);
+				fscanf_s(file, "%f %f %f\n", &vertex.x, &vertex.y, &vertex.z);
 				vertices.push_back(vertex);
 			}
 			else if (strcmp(lineHeader, "vn") == 0) {
 				vec3 normal;
-				fscanf(file, "%f %f %f\n", &normal.x, &normal.y, &normal.z);
+				fscanf_s(file, "%f %f %f\n", &normal.x, &normal.y, &normal.z);
 				normals.push_back(normal);
 			}
 			else if (strcmp(lineHeader, "vt") == 0) {
 				vec2 uv;
-				fscanf(file, "%f %f\n", &uv.x, &uv.y);
+				fscanf_s(file, "%f %f\n", &uv.x, &uv.y);
 				uvs.push_back(uv);
 			}
 			else if (strcmp(lineHeader, "f") == 0) {
 				unsigned int vertexIndex[3], uvIndex[3], normalIndex[3];
-				int matches = fscanf(file, "%d/%d/%d %d/%d/%d %d/%d/%d\n", &vertexIndex[0], &uvIndex[0], &normalIndex[0], &vertexIndex[1], &uvIndex[1], &normalIndex[1], &vertexIndex[2], &uvIndex[2], &normalIndex[2]);
+				int matches = fscanf_s(file, "%d/%d/%d %d/%d/%d %d/%d/%d\n", &vertexIndex[0], &uvIndex[0], &normalIndex[0], &vertexIndex[1], &uvIndex[1], &normalIndex[1], &vertexIndex[2], &uvIndex[2], &normalIndex[2]);
 				if (matches != 9) {
 					printf("File can't be read by our simple parser : ( Try exporting with other options\n");
 				}
@@ -1116,7 +1117,7 @@ namespace Light {
 }
 
 namespace Effects {
-	float sigma = 10;
-	int blurSize = 32;
+	float sigma = 24;
+	int blurSize = 64;
 	float splitscreenLineThickness = 2.0f / WINDOW_WIDTH;
 }
